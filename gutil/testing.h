@@ -15,34 +15,35 @@
 #ifndef GUTIL_TESTING_H
 #define GUTIL_TESTING_H
 
-#include <gmock/gmock-matchers.h>
-#include <gtest/gtest.h>
-
 #include <string>
 
-#include "google/protobuf/util/message_differencer.h"
 #include "gutil/proto.h"
 #include "gutil/status.h"
 
 namespace gutil {
 
-// Crash if `status` is not okay. Only use in tests.
-#define CHECK_OK(expr)                                                       \
-  {                                                                          \
-    auto status = expr;                                                      \
-    if (!status.ok()) {                                                      \
-      std::cerr << "CHECK_OK(" << #expr                                      \
-                << ") failed. Status was:" << status.message() << std::endl; \
-      exit(1);                                                               \
-    }                                                                        \
-  }
+// copybara:insert_begin(open source CHECK macros)
+//
+// // Crash if `status` is not okay. Only use in tests.
+// #define CHECK_OK(expr)                                                       \
+//   {                                                                          \
+//     auto status = expr;                                                      \
+//     if (!status.ok()) {                                                      \
+//       std::cerr << "CHECK_OK(" << #expr                                      \
+//                 << ") failed. Status was:" << status.message() << std::endl; \
+//       exit(1);                                                               \
+//     }                                                                        \
+//   }
+//
+// // Crash if `expr` is false. Only use in tests.
+// #define CHECK(expr)                                             \
+//   if (!(expr)) {                                                \
+//     std::cerr << "CHECK(" << #expr << ") failed." << std::endl; \
+//     exit(1);                                                    \
+//   }
+//
+// copybara:insert_end
 
-// Crash if `expr` is false. Only use in tests.
-#define CHECK(expr)                                             \
-  if (!(expr)) {                                                \
-    std::cerr << "CHECK(" << #expr << ") failed." << std::endl; \
-    exit(1);                                                    \
-  }
 
 // Parses a protobuf from a string, and crashes if parsing failed. Only use in
 // tests.

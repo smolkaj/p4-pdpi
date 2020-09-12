@@ -16,9 +16,13 @@ package(
     licenses = ["notice"],
 )
 
-load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
-
-buildifier(
-    name = "buildifier",
-    exclude_patterns = ["./third_party/*"],
-)
+# copybara:insert_begin(needed for open source format.sh script)
+#
+# load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+#
+# buildifier(
+#     name = "buildifier",
+#     exclude_patterns = ["./third_party/*"],
+# )
+#
+# copybara:insert_end
