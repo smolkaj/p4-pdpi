@@ -150,15 +150,15 @@ absl::Status ValidateMatchFieldDefinition(const IrMatchFieldDefinition &match) {
                   "Format::STRING: "
                << match.match_field().ShortDebugString() << ".";
       }
+      return absl::OkStatus();
     case p4::config::v1::MatchField::EXACT:
     case p4::config::v1::MatchField::OPTIONAL:
-      break;
+      return absl::OkStatus();
     default:
       return InvalidArgumentErrorBuilder()
              << "Match field match type not supported: "
              << match.match_field().ShortDebugString() << ".";
   }
-  return absl::OkStatus();
 }
 
 }  // namespace
