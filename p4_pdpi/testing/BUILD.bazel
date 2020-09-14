@@ -18,7 +18,7 @@ package(
 
 load("@rules_cc//cc:defs.bzl", "cc_proto_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
-load(":diff_test.bzl", "cmd_diff_test", "diff_test", "run_pdpi")
+load(":diff_test.bzl", "cmd_diff_test", "diff_test")
 load("//p4_pdpi:pdgen.bzl", "p4_pd_proto")
 load("@com_github_p4lang_p4c//:bazel/p4_library.bzl", "p4_library")
 
@@ -64,7 +64,6 @@ cc_library(
         "//gutil:status",
         "//gutil:testing",
         "//p4_pdpi:ir",
-        "@bazel_tools//tools/cpp/runfiles",
         "@com_google_absl//absl/strings",
     ],
 )
@@ -146,39 +145,6 @@ cmd_diff_test(
         ":table_entry_test_binary",
         "main-p4info.pb.txt",
     ],
-)
-
-cc_binary(
-    name = "pdpi_test_runner",
-    srcs = ["pdpi_test_runner.cc"],
-    data = ["main-p4info.pb.txt"],
-    deps = [
-        ":testing_cc_proto",
-        "//gutil:proto",
-        "//gutil:status",
-        "//p4_pdpi:ir",
-        "//p4_pdpi:pd",
-        "@bazel_tools//tools/cpp/runfiles",
-        "@com_google_absl//absl/flags:flag",
-        "@com_google_absl//absl/flags:parse",
-        "@com_google_absl//absl/flags:usage",
-        "@com_google_absl//absl/strings",
-    ],
-)
-
-proto_library(
-    name = "testing_proto",
-    srcs = ["testing.proto"],
-    deps = [
-        "//p4_pdpi:ir_proto",
-        "@com_github_p4lang_p4runtime//:p4info_proto",
-        "@com_github_p4lang_p4runtime//:p4runtime_proto",
-    ],
-)
-
-cc_proto_library(
-    name = "testing_cc_proto",
-    deps = [":testing_proto"],
 )
 
 cc_test(

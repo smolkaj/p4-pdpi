@@ -19,7 +19,6 @@
 #include "gutil/proto.h"
 #include "gutil/testing.h"
 #include "p4_pdpi/ir.h"
-#include "tools/cpp/runfiles/runfiles.h"
 
 constexpr char kBanner[] =
     "=========================================================================";
@@ -36,15 +35,6 @@ std::string TestHeader(const std::string& test_name) {
 void Fail(const std::string& message) {
   std::cerr << "TEST FAILED (DO NOT SUBMIT)" << std::endl;
   std::cerr << "FAILURE REASON: " << message << std::endl;
-}
-
-p4::config::v1::P4Info GetP4Info(
-    const bazel::tools::cpp::runfiles::Runfiles* runfiles,
-    const std::string& name) {
-  p4::config::v1::P4Info info;
-  CHECK_OK(gutil::ReadProtoFromFile(
-      runfiles->Rlocation(absl::StrCat("p4_pdpi/", name)), &info));
-  return info;
 }
 
 // Runs a generic test starting from an invalid PI and checks that it cannot be
