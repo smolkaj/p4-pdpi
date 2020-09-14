@@ -20,10 +20,9 @@
 #include "gutil/proto.h"
 #include "gutil/status.h"
 
-namespace gutil {
-
-// copybara:insert_begin(open source CHECK macros)
-//
+// copybara:strip_begin(CHECK macros not available externally)
+#include "util/task/status.h"
+// copybara:strip_end_and_replace_begin//
 // // Crash if `status` is not okay. Only use in tests.
 // #define CHECK_OK(expr)                                                       \
 //   {                                                                          \
@@ -41,9 +40,9 @@ namespace gutil {
 //     std::cerr << "CHECK(" << #expr << ") failed." << std::endl; \
 //     exit(1);                                                    \
 //   }
-//
 // copybara:insert_end
 
+namespace gutil {
 
 // Parses a protobuf from a string, and crashes if parsing failed. Only use in
 // tests.
