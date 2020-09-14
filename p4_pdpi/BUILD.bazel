@@ -36,8 +36,8 @@ cc_library(
         "//gutil:status",
         "//p4_pdpi/utils:ir",
         "//p4_pdpi/utils:pd",
-        "@com_google_absl//absl/status",
         "@com_github_p4lang_p4runtime//:p4info_cc_proto",
+        "@com_google_absl//absl/status",
     ],
 )
 

@@ -379,7 +379,8 @@ absl::Status IrWriteRequestToPd(const IrP4Info &info, const IrWriteRequest &ir,
   if (ir.election_id().high() > 0 || ir.election_id().low() > 0) {
     ASSIGN_OR_RETURN(auto *election_id,
                      GetMutableMessage(write_request, "election_id"));
-    RETURN_IF_ERROR(SetUint64Field(election_id, "high", ir.election_id().high()));
+    RETURN_IF_ERROR(
+        SetUint64Field(election_id, "high", ir.election_id().high()));
     RETURN_IF_ERROR(SetUint64Field(election_id, "low", ir.election_id().low()));
   }
 
