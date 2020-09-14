@@ -694,9 +694,9 @@ void RunWriteRpcStatusTest() {
 }
 
 int main(int argc, char** argv) {
-  CHECK(argc == 2); // Usage: rpc_test <p4info file>.
+  CHECK(argc == 2);  // Usage: rpc_test <p4info file>.
   const auto p4info =
-    gutil::ParseProtoFileOrDie<p4::config::v1::P4Info>(argv[1]);
+      gutil::ParseProtoFileOrDie<p4::config::v1::P4Info>(argv[1]);
 
   gutil::StatusOr<pdpi::IrP4Info> status_or_info = pdpi::CreateIrP4Info(p4info);
   CHECK_OK(status_or_info.status());

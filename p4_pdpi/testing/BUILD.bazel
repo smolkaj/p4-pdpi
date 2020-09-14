@@ -58,6 +58,7 @@ diff_test(
 
 cc_library(
     name = "test_helper",
+    testonly = True,
     hdrs = ["test_helper.h"],
     deps = [
         "//gutil:proto",
@@ -66,15 +67,14 @@ cc_library(
         "//p4_pdpi:ir",
         "@com_google_absl//absl/strings",
     ],
-    testonly = True,
 )
 
 cc_binary(
     name = "info_test_binary",
+    testonly = True,
     srcs = ["info_test.cc"],
     data = ["main-p4info.pb.txt"],
     deps = [":test_helper"],
-    testonly = True,
 )
 
 cmd_diff_test(
@@ -82,13 +82,14 @@ cmd_diff_test(
     actual_cmd = "$(execpath :info_test_binary) $(location :main-p4info.pb.txt)",
     expected = "testdata/info.expected",
     tools = [
-        ":info_test_binary",
         "main-p4info.pb.txt",
+        ":info_test_binary",
     ],
 )
 
 cc_binary(
     name = "rpc_test_binary",
+    testonly = True,
     srcs = ["rpc_test.cc"],
     data = ["main-p4info.pb.txt"],
     deps = [
@@ -96,7 +97,6 @@ cc_binary(
         ":test_helper",
         "//p4_pdpi:pd",
     ],
-    testonly = True,
 )
 
 cmd_diff_test(
@@ -104,13 +104,14 @@ cmd_diff_test(
     actual_cmd = "$(execpath :rpc_test_binary)  $(location :main-p4info.pb.txt)",
     expected = "testdata/rpc.expected",
     tools = [
-        ":rpc_test_binary",
         "main-p4info.pb.txt",
+        ":rpc_test_binary",
     ],
 )
 
 cc_binary(
     name = "packet_io_test_binary",
+    testonly = True,
     srcs = ["packet_io_test.cc"],
     data = ["main-p4info.pb.txt"],
     deps = [
@@ -118,7 +119,6 @@ cc_binary(
         ":test_helper",
         "//p4_pdpi:pd",
     ],
-    testonly = True,
 )
 
 cmd_diff_test(
@@ -126,20 +126,20 @@ cmd_diff_test(
     actual_cmd = "$(execpath :packet_io_test_binary) $(location :main-p4info.pb.txt)",
     expected = "testdata/packet_io.expected",
     tools = [
-        ":packet_io_test_binary",
         "main-p4info.pb.txt",
+        ":packet_io_test_binary",
     ],
 )
 
 cc_binary(
     name = "table_entry_test_binary",
+    testonly = True,
     srcs = ["table_entry_test.cc"],
     deps = [
         ":main_p4_pd_cc_proto",
         ":test_helper",
         "//p4_pdpi:pd",
     ],
-    testonly = True,
 )
 
 cmd_diff_test(
@@ -147,8 +147,8 @@ cmd_diff_test(
     actual_cmd = "$(execpath :table_entry_test_binary) $(location :main-p4info.pb.txt)",
     expected = "testdata/table_entry.expected",
     tools = [
-        ":table_entry_test_binary",
         "main-p4info.pb.txt",
+        ":table_entry_test_binary",
     ],
 )
 

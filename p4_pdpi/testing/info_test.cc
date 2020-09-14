@@ -37,9 +37,9 @@ void RunP4InfoTest(const std::string& test_name, const P4Info& p4info) {
 }
 
 int main(int argc, char** argv) {
-  CHECK(argc == 2); // Usage: info_test <p4info file>.
+  CHECK(argc == 2);  // Usage: info_test <p4info file>.
   const auto p4info =
-    gutil::ParseProtoFileOrDie<p4::config::v1::P4Info>(argv[1]);
+      gutil::ParseProtoFileOrDie<p4::config::v1::P4Info>(argv[1]);
 
   RunP4InfoTest("missing action definition",
                 gutil::ParseProtoOrDie<P4Info>(

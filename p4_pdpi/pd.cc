@@ -475,8 +475,8 @@ absl::Status IrMatchEntryToPd(const IrTableDefinition &ir_table_info,
         ASSIGN_OR_RETURN(auto *pd_optional,
                          GetMutableMessage(pd_match, ir_match.name()));
         ASSIGN_OR_RETURN(const auto &pd_value,
-            IrValueToFormattedString(ir_match.optional().value(),
-        ir_match_info.format()));
+                         IrValueToFormattedString(ir_match.optional().value(),
+                                                  ir_match_info.format()));
         RETURN_IF_ERROR(SetStringField(pd_optional, "value", pd_value));
         break;
       }
@@ -558,10 +558,10 @@ absl::Status PdMatchEntryToIr(const IrTableDefinition &ir_table_info,
       case MatchField::OPTIONAL: {
         auto *ir_optional = ir_match->mutable_optional();
         ASSIGN_OR_RETURN(const auto *pd_optional,
-        GetMessageField(pd_match, pd_match_name));
+                         GetMessageField(pd_match, pd_match_name));
 
         ASSIGN_OR_RETURN(const auto &pd_value,
-        GetStringField(*pd_optional, "value"));
+                         GetStringField(*pd_optional, "value"));
         ASSIGN_OR_RETURN(
             *ir_optional->mutable_value(),
             FormattedStringToIrValue(pd_value, ir_match_info.format()));
