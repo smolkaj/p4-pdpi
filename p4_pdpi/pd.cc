@@ -346,8 +346,6 @@ absl::Status IrUpdateToPd(const IrP4Info &info, const IrUpdate &ir,
       ValidateFieldDescriptorType(type_descriptor, FieldDescriptor::TYPE_ENUM));
   update->GetReflection()->SetEnumValue(update, type_descriptor, ir.type());
 
-  ASSIGN_OR_RETURN(const auto *table_entry_descriptor,
-                   GetFieldDescriptor(*update, "table_entry"));
   ASSIGN_OR_RETURN(auto *pd_table_entry,
                    GetMutableMessage(update, "table_entry"));
   RETURN_IF_ERROR(IrTableEntryToPd(info, ir.table_entry(), pd_table_entry));
@@ -377,12 +375,12 @@ gutil::StatusOr<IrUpdate> PdUpdateToIr(
 
 absl::Status IrWriteRequestToPd(const IrP4Info &info, const IrWriteRequest &ir,
                                 google::protobuf::Message *write_request) {
-  SetUint64Field(write_request, "device_id", ir.device_id());
+  RETURN_IF_ERROR(SetUint64Field(write_request, "device_id", ir.device_id()));
   if (ir.election_id().high() > 0 || ir.election_id().low() > 0) {
     ASSIGN_OR_RETURN(auto *election_id,
                      GetMutableMessage(write_request, "election_id"));
-    SetUint64Field(election_id, "high", ir.election_id().high());
-    SetUint64Field(election_id, "low", ir.election_id().low());
+    RETURN_IF_ERROR(SetUint64Field(election_id, "high", ir.election_id().high()));
+    RETURN_IF_ERROR(SetUint64Field(election_id, "low", ir.election_id().low()));
   }
 
   ASSIGN_OR_RETURN(const auto updates_descriptor,
