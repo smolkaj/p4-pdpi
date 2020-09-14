@@ -45,6 +45,7 @@ cc_binary(
     deps = [
         ":ir",
         ":pdgenlib",
+        "//gutil:collections",
         "//gutil:proto",
         "//gutil:status",
         "@com_google_absl//absl/flags:flag",
