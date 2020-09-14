@@ -15,8 +15,6 @@
 #ifndef P4_PDPI_UTILS_PD_H
 #define P4_PDPI_UTILS_PD_H
 
-#include <google/protobuf/message.h>
-
 #include "gutil/status.h"
 
 namespace pdpi {
@@ -28,5 +26,7 @@ gutil::StatusOr<std::string> P4NameToProtobufMessageName(
 // Given a P4 name, returns the name of the corresponding protobuf field name.
 gutil::StatusOr<std::string> P4NameToProtobufFieldName(
     const std::string &p4_name);
+
 }  // namespace pdpi
+
 #endif  // P4_PDPI_UTILS_PD_H
