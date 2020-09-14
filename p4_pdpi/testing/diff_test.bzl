@@ -139,6 +139,7 @@ def cmd_diff_test(name, actual_cmd, expected, tools = [], visibility = None):
         outs = [name + ".actual"],
         tools = tools,
         cmd = actual_cmd + " &> '$@'",
+        testonly = True,
     )
     diff_test(
         name = name,

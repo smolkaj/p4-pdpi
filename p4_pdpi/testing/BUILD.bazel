@@ -66,6 +66,7 @@ cc_library(
         "//p4_pdpi:ir",
         "@com_google_absl//absl/strings",
     ],
+    testonly = True,
 )
 
 cc_binary(
@@ -73,6 +74,7 @@ cc_binary(
     srcs = ["info_test.cc"],
     data = ["main-p4info.pb.txt"],
     deps = [":test_helper"],
+    testonly = True,
 )
 
 cmd_diff_test(
@@ -94,6 +96,7 @@ cc_binary(
         ":test_helper",
         "//p4_pdpi:pd",
     ],
+    testonly = True,
 )
 
 cmd_diff_test(
@@ -115,6 +118,7 @@ cc_binary(
         ":test_helper",
         "//p4_pdpi:pd",
     ],
+    testonly = True,
 )
 
 cmd_diff_test(
@@ -135,6 +139,7 @@ cc_binary(
         ":test_helper",
         "//p4_pdpi:pd",
     ],
+    testonly = True,
 )
 
 cmd_diff_test(
