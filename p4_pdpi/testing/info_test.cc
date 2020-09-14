@@ -19,9 +19,7 @@
 #include "gutil/testing.h"
 #include "p4_pdpi/ir.h"
 #include "p4_pdpi/testing/test_helper.h"
-#include "tools/cpp/runfiles/runfiles.h"
 
-using ::bazel::tools::cpp::runfiles::Runfiles;
 using ::p4::config::v1::P4Info;
 
 void RunP4InfoTest(const std::string& test_name, const P4Info& p4info) {
@@ -39,9 +37,9 @@ void RunP4InfoTest(const std::string& test_name, const P4Info& p4info) {
 }
 
 int main(int argc, char** argv) {
-  std::string error;
-  std::unique_ptr<Runfiles> runfiles(Runfiles::Create(argv[0], &error));
-  CHECK(runfiles != nullptr);
+  CHECK(argc == 2); // Usage: info_test <p4info file>.
+  const auto p4info =
+    gutil::ParseProtoFileOrDie<p4::config::v1::P4Info>(argv[1]);
 
   RunP4InfoTest("missing action definition",
                 gutil::ParseProtoOrDie<P4Info>(
@@ -148,8 +146,7 @@ int main(int argc, char** argv) {
           params { id: 2 name: "param2" annotations: "@format(IPVx_ADDRESS)" }
         })PB"));
 
-  RunP4InfoTest("main.p4", GetP4Info(runfiles.get(),
-                                     "p4_pdpi/testing/main-p4info.pb.txt"));
+  RunP4InfoTest("main.p4", p4info);
 
   return 0;
 }

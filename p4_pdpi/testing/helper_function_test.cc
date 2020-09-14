@@ -23,10 +23,13 @@
 #include "p4/v1/p4runtime.pb.h"
 #include "p4_pdpi/pd.h"
 #include "p4_pdpi/testing/main_p4_pd.pb.h"
+
 constexpr char kPdUpdatestatus[] =
     R"pb(code: UNKNOWN, message: "some_message")pb";
+
 namespace pdpi {
 namespace {
+
 TEST(GetEnumValueInProtoByReflectionTest, GetValidValue) {
   auto pd_update_status =
       gutil::ParseProtoOrDie<pdpi::UpdateStatus>(kPdUpdatestatus);
@@ -85,5 +88,6 @@ TEST(SetEnumValueInProtoByReflectionTest, SetEnumWithInvalidFieldName) {
                    static_cast<int>(google::rpc::OK));
   ASSERT_FALSE(status_or_enum_code.ok());
 }
+
 }  // namespace
 }  // namespace pdpi

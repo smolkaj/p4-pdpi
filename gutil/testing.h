@@ -48,9 +48,18 @@ namespace gutil {
 // Parses a protobuf from a string, and crashes if parsing failed. Only use in
 // tests.
 template <typename T>
-T ParseProtoOrDie(const std::string& proto_string) {
+T ParseProtoOrDie(std::string_view proto_string) {
   T message;
   CHECK_OK(ReadProtoFromString(proto_string, &message));
+  return message;
+}
+
+// Parses a protobuf from a file, and crashes if parsing failed. Only use in
+// tests.
+template <typename T>
+T ParseProtoFileOrDie(std::string_view proto_file) {
+  T message;
+  CHECK_OK(ReadProtoFromFile(proto_file, &message));
   return message;
 }
 

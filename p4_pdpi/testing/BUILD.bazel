@@ -78,9 +78,12 @@ cc_binary(
 
 cmd_diff_test(
     name = "info_test",
-    actual_cmd = "$(execpath :info_test_binary)",
+    actual_cmd = "$(execpath :info_test_binary) $(location :main-p4info.pb.txt)",
     expected = "testdata/info.expected",
-    tools = [":info_test_binary"],
+    tools = [
+        ":info_test_binary",
+        "main-p4info.pb.txt",
+    ],
 )
 
 cc_binary(
@@ -96,9 +99,12 @@ cc_binary(
 
 cmd_diff_test(
     name = "rpc_test",
-    actual_cmd = "$(execpath :rpc_test_binary)",
+    actual_cmd = "$(execpath :rpc_test_binary)  $(location :main-p4info.pb.txt)",
     expected = "testdata/rpc.expected",
-    tools = [":rpc_test_binary"],
+    tools = [
+        ":rpc_test_binary",
+        "main-p4info.pb.txt",
+    ],
 )
 
 cc_binary(
@@ -114,15 +120,17 @@ cc_binary(
 
 cmd_diff_test(
     name = "packet_io_test",
-    actual_cmd = "$(execpath :packet_io_test_binary)",
+    actual_cmd = "$(execpath :packet_io_test_binary) $(location :main-p4info.pb.txt)",
     expected = "testdata/packet_io.expected",
-    tools = [":packet_io_test_binary"],
+    tools = [
+        ":packet_io_test_binary",
+        "main-p4info.pb.txt",
+    ],
 )
 
 cc_binary(
     name = "table_entry_test_binary",
     srcs = ["table_entry_test.cc"],
-    data = ["main-p4info.pb.txt"],
     deps = [
         ":main_p4_pd_cc_proto",
         ":test_helper",
@@ -132,9 +140,12 @@ cc_binary(
 
 cmd_diff_test(
     name = "table_entry_test",
-    actual_cmd = "$(execpath :table_entry_test_binary)",
+    actual_cmd = "$(execpath :table_entry_test_binary) $(location :main-p4info.pb.txt)",
     expected = "testdata/table_entry.expected",
-    tools = [":table_entry_test_binary"],
+    tools = [
+        ":table_entry_test_binary",
+        "main-p4info.pb.txt",
+    ],
 )
 
 cc_binary(

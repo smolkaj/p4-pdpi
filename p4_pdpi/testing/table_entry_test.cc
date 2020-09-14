@@ -22,9 +22,7 @@
 #include "p4_pdpi/pd.h"
 #include "p4_pdpi/testing/main_p4_pd.pb.h"
 #include "p4_pdpi/testing/test_helper.h"
-#include "tools/cpp/runfiles/runfiles.h"
 
-using ::bazel::tools::cpp::runfiles::Runfiles;
 using ::p4::config::v1::P4Info;
 
 void RunPiTableEntryTest(const pdpi::IrP4Info& info,
@@ -1287,12 +1285,11 @@ void RunPdTests(const pdpi::IrP4Info info) {
 }
 
 int main(int argc, char** argv) {
-  std::string error;
-  std::unique_ptr<Runfiles> runfiles(Runfiles::Create(argv[0], &error));
-  CHECK(runfiles != nullptr);
+  CHECK(argc == 2); // Usage: table_entry_test <p4info file>.
+  const auto p4info =
+    gutil::ParseProtoFileOrDie<p4::config::v1::P4Info>(argv[1]);
 
-  gutil::StatusOr<pdpi::IrP4Info> status_or_info = pdpi::CreateIrP4Info(
-      GetP4Info(runfiles.get(), "p4_pdpi/testing/main-p4info.pb.txt"));
+  gutil::StatusOr<pdpi::IrP4Info> status_or_info = pdpi::CreateIrP4Info(p4info);
   CHECK_OK(status_or_info.status());
   pdpi::IrP4Info info = status_or_info.value();
 

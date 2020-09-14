@@ -15,17 +15,19 @@
 #ifndef GUTIL_PROTO_H
 #define GUTIL_PROTO_H
 
+#include <string>
+
 #include "google/protobuf/text_format.h"
 #include "gutil/status.h"
 
 namespace gutil {
 
 // Read the contents of the file into a protobuf.
-absl::Status ReadProtoFromFile(const std::string &filename,
+absl::Status ReadProtoFromFile(std::string_view filename,
                                google::protobuf::Message *message);
 
 // Read the contents of the string into a protobuf.
-absl::Status ReadProtoFromString(const std::string &proto_string,
+absl::Status ReadProtoFromString(std::string_view proto_string,
                                  google::protobuf::Message *message);
 
 // Get the name of the oneof enum that is set.
