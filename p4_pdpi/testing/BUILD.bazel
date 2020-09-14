@@ -62,10 +62,9 @@ cc_library(
     hdrs = ["test_helper.h"],
     deps = [
         "//gutil:proto",
-        "//gutil:status",
         "//gutil:testing",
         "//p4_pdpi:ir",
-        "@com_google_absl//absl/strings",
+        "@com_google_protobuf//:protobuf",
     ],
 )
 
