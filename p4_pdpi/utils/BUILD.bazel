@@ -44,7 +44,7 @@ cc_test(
     deps = [
         ":annotation_parser",
         "//gutil:testing",
-        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
     ],
 )
 
