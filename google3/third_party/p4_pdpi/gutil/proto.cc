@@ -1,0 +1,82 @@
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "third_party/p4_pdpi/gutil/proto.h"
+
+#include <fcntl.h>
+
+#include <string>
+#include <string_view>
+
+#include "net/proto2/io/public/zero_copy_stream_impl.h"
+#include "net/proto2/public/descriptor.h"
+#include "net/proto2/public/message.h"
+#include "net/proto2/public/text_format.h"
+#include "third_party/absl/status/status.h"
+#include "third_party/absl/status/statusor.h"
+#include "third_party/p4_pdpi/gutil/status.h"
+
+namespace gutil {
+
+absl::Status ReadProtoFromFile(std::string_view filename,
+                               proto2::Message *message) {
+  // Verifies that the version of the library that we linked against is
+  // compatible with the version of the headers we compiled against.
+  // GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  int fd = open(std::string(filename).c_str(), O_RDONLY);
+  if (fd < 0) {
+    return InvalidArgumentErrorBuilder()
+           << "Error opening the file " << filename << ".";
+  }
+
+  proto2::io::FileInputStream file_stream(fd);
+  file_stream.SetCloseOnDelete(true);
+
+  if (!proto2::TextFormat::Parse(&file_stream, message)) {
+    return InvalidArgumentErrorBuilder()
+           << "Failed to parse file " << filename << ".";
+  }
+
+  return absl::OkStatus();
+}
+
+absl::Status ReadProtoFromString(std::string_view proto_string,
+                                 proto2::Message *message) {
+  // Verifies that the version of the library that we linked against is
+  // compatible with the version of the headers we compiled against.
+  // GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  if (!proto2::TextFormat::ParseFromString(std::string(proto_string),
+                                           message)) {
+    return InvalidArgumentErrorBuilder()
+           << "Failed to parse string " << proto_string << ".";
+  }
+
+  return absl::OkStatus();
+}
+
+absl::StatusOr<std::string> GetOneOfFieldName(const proto2::Message &message,
+                                              const std::string &oneof_name) {
+  const auto *oneof_descriptor =
+      message.GetDescriptor()->FindOneofByName(oneof_name);
+  const auto *field = message.GetReflection()->GetOneofFieldDescriptor(
+      message, oneof_descriptor);
+  if (!field) {
+    return gutil::NotFoundErrorBuilder()
+           << "Oneof field \"" << oneof_name << "\" is not set.";
+  }
+  return field->name();
+}
+}  // namespace gutil

@@ -1,6 +1,0 @@
-# Bazel build system.
-bazel*
-
-# JetBrains IDE.
-.idea
-.clwb
