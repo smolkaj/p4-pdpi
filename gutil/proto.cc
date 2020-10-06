@@ -17,8 +17,15 @@
 #include <fcntl.h>
 
 #include <string>
+#include <string_view>
 
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
+#include "google/protobuf/descriptor.h"
 #include "google/protobuf/io/zero_copy_stream_impl.h"
+#include "google/protobuf/message.h"
+#include "google/protobuf/text_format.h"
+#include "gutil/status.h"
 
 namespace gutil {
 
@@ -60,7 +67,7 @@ absl::Status ReadProtoFromString(std::string_view proto_string,
   return absl::OkStatus();
 }
 
-gutil::StatusOr<std::string> GetOneOfFieldName(
+absl::StatusOr<std::string> GetOneOfFieldName(
     const google::protobuf::Message &message, const std::string &oneof_name) {
   const auto *oneof_descriptor =
       message.GetDescriptor()->FindOneofByName(oneof_name);
