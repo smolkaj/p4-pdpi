@@ -31,4 +31,4 @@ jobs:
         chmod +x $BAZEL
 
     - name: Test
-      run: ./$BAZEL test //... --test_output=errors
+      run: ./$BAZEL test //... --test_output=errors --distinct_host_configuration=false

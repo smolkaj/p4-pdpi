@@ -31,4 +31,4 @@ jobs:
         chmod +x $BAZEL
 
     - name: Build
-      run: ./$BAZEL build //...
+      run: ./$BAZEL build //... --distinct_host_configuration=false
