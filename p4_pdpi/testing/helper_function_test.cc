@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <gmock/gmock-matchers.h>
-#include <gtest/gtest.h>
-
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
+#include "gmock/gmock.h"
+#include "google/protobuf/descriptor.h"
+#include "google/protobuf/message.h"
 #include "google/rpc/code.pb.h"
-#include "google/rpc/status.pb.h"
+#include "gtest/gtest.h"
 #include "gutil/status.h"
 #include "gutil/status_matchers.h"
 #include "gutil/testing.h"

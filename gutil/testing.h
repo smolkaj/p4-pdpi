@@ -15,32 +15,15 @@
 #ifndef GUTIL_TESTING_H
 #define GUTIL_TESTING_H
 
-#include <string>
+#include <string_view>
 
+#include "absl/status/status.h"
+#include "glog/logging.h"
 #include "gutil/proto.h"
 #include "gutil/status.h"
 
-// copybara:strip_begin(CHECK macros not available externally)
-#include "util/task/status.h"
-// copybara:strip_end_and_replace_begin
-// // Crash if `status` is not okay. Only use in tests.
-// #define CHECK_OK(expr)                                                       \
-//   {                                                                          \
-//     auto status = expr;                                                      \
-//     if (!status.ok()) {                                                      \
-//       std::cerr << "CHECK_OK(" << #expr                                      \
-//                 << ") failed. Status was:" << status.message() << std::endl; \
-//       exit(1);                                                               \
-//     }                                                                        \
-//   }
-//
-// // Crash if `expr` is false. Only use in tests.
-// #define CHECK(expr)                                             \
-//   if (!(expr)) {                                                \
-//     std::cerr << "CHECK(" << #expr << ") failed." << std::endl; \
-//     exit(1);                                                    \
-//   }
-// copybara:insert_end
+// Crash if `status` is not okay. Only use in tests.
+#define CHECK_OK(val) CHECK_EQ(::absl::OkStatus(), (val))
 
 namespace gutil {
 

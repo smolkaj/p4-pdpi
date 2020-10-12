@@ -16,8 +16,11 @@
 #define GUTIL_PROTO_H
 
 #include <string>
+#include <string_view>
 
-#include "google/protobuf/text_format.h"
+#include "absl/status/status.h"
+#include "absl/status/statusor.h"
+#include "google/protobuf/message.h"
 #include "gutil/status.h"
 
 namespace gutil {
@@ -45,7 +48,7 @@ absl::Status ReadProtoFromString(std::string_view proto_string,
 // value.set_hex_str("0xf00d");
 // std::string name = GetOneOfFieldName(value, std::string("format"));
 // EXPECT_EQ(name, "hex_str");
-gutil::StatusOr<std::string> GetOneOfFieldName(
+absl::StatusOr<std::string> GetOneOfFieldName(
     const google::protobuf::Message &message, const std::string &oneof_name);
 }  // namespace gutil
 #endif  // GUTIL_PROTO_H
